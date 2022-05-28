@@ -5,7 +5,7 @@ import { useTaskContext } from '../../context/taskContext'
 const TaskList = () => {
   const { tasks } = useTaskContext()
   return (
-    <div>
+    <div className='h-[95vh] overflow-y-auto'>
       {tasks.map((task) => {
         return <Task key={task.task_id} task={task} />
       }

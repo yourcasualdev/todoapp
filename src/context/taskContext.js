@@ -4,24 +4,33 @@ const TaskContext = createContext();
 
 const TaskProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
+    const [update, setUpdate] = useState(false);
 
     useEffect(() => {
         setTasks(JSON.parse(localStorage.getItem("tasks")) || []);
-    }, []);
+    }, [update]);
+
+    const refresh_tasks = () => {
+        setUpdate(!update);
+    }
 
 
+    const add_task = (task_text) => {
+        if (task_text === "" || typeof (task_text) !== "string") {
+            return;
+        }
 
-    const add_task = (task_text) => {   
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    
+
         const task = {
             task_text: task_text,
             task_id: tasks.length + 1,
             task_is_completed: false
         }
-    
+
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
+        refresh_tasks();
     }
 
     const get_tasks = () => {
@@ -53,7 +62,8 @@ const TaskProvider = ({ children }) => {
         tasks,
         add_task,
         deleteTask,
-        toggleTask
+        toggleTask,
+        refresh_tasks
     }
 
     return (

@@ -1,12 +1,10 @@
-import AddTask from "./components/AddTask/AddTask";
-import TaskList from "./components/TaskList/TaskList";
+import { TaskList, AddTask } from './components';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-black min-h-screen text-white">
       <TaskList />
       <AddTask />
-      <h1 className="text-center">Hello World</h1>
     </div>
   );
 }

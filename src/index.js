@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import  TaskProvider  from './context/taskContext';
-import { createContext, useContext, useState } from "react";
-
+import TaskProvider from './context/taskContext';
 import './index.css';
 
 
