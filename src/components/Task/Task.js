@@ -1,14 +1,14 @@
 import { useTaskContext } from "../../context/taskContext";
 
 const Task = ({ num, task }) => {
-  const { deleteTask, toggleTask } = useTaskContext();
+  const { deleteTask, toggleTask, updateTask } = useTaskContext();
   const creationDate = new Date(task.task_date);
 
   return (
-    <tr className="max-w-xs" onClick={() => toggleTask(task.task_id)}>
+    <tr className="max-w-xs">
 
       {/* Task Number */}
-      <th className="w-[10px]">{num}</th>
+      <th className="w-[10px] z-0">{num}</th>
 
       {/* Task Text */}
       <td
@@ -23,9 +23,22 @@ const Task = ({ num, task }) => {
 
       {/* Task Actions */}
       <td className="w-[1rem] max-w-lg content-start ">
-        <button onClick={(e) => deleteTask(task.task_id)} className={"btn btn-primary"}>
-          Delete
-        </button>
+        <label htmlFor={task.task_id} className="btn modal-button">More</label>
+        <input type="checkbox" id={task.task_id} className="modal-toggle" />
+        <label htmlFor={task.task_id} className="modal cursor-pointer">
+          <label className="modal-box relative grid" htmlFor="">
+            <h3 className="text-lg font-bold">Congratulations random Interner user!</h3>
+            <textarea onChange={(e) => updateTask(task.task_id, e.target.value)} className="py-4 mt-5 mb-2" value={task.task_text} />
+            <div className="flex m-auto ">
+              <button onClick={() => toggleTask(task.task_id)} className={"btn btn-primary mr-2"}>
+                {task.task_is_completed ? "Uncomplete" : "Complete"}
+              </button>
+              <button onClick={(e) => deleteTask(task.task_id)} className={"btn btn-error"}>
+                Delete
+              </button>
+            </div>
+          </label>
+        </label>
       </td>
     </tr>
   )

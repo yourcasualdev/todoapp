@@ -7,13 +7,16 @@ const TaskList = () => {
   const { tasks } = useTaskContext()
 
   useEffect(() => {
-    console.log("rendering task list")
-    console.log(tasks)
-  })
+    // sort tasks by date
+    tasks.sort((a, b) => {
+      return new Date(a.task_date) - new Date(b.task_date)
+    })
+  }, [tasks])
+
 
 
   return (
-    <div className="overflow-x-auto max-w-[60rem] m-auto pt-5">
+    <div className="overflow-x-auto max-w-[60rem] m-auto pt-4 p-4">
       <table className="table table-zebra w-full">
         <thead>
           <tr>

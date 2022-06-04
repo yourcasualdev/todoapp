@@ -17,15 +17,17 @@ const AddTask = () => {
   };
 
   return (
-    <form className=" fixed bottom-0 w-screen grid place-items-center">
-      <div className="flex">
+    <form className="fixed bottom-0 p-5 grid w-screen place-items-center z-50">
+      <div className="">
         <input
           type="text"
           placeholder="Add Task"
           value={task_text}
           onChange={(e) => handleChange(e)}
-          className="input input-bordered input-secondary w-[2000px] max-w-xs" />
-        <button onClick={(e) => handleSubmit(e)} className={"btn btn-primary"}>
+          className="input input-bordered input-secondary w-50" />
+        <button
+          onClick={(e) => handleSubmit(e)} className={"btn btn-primary flex-1 ml-1"}
+        >
           ADD
         </button>
       </div>

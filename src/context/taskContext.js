@@ -73,6 +73,19 @@ const TaskProvider = ({ children }) => {
         setTasks(getTasks());
     }
 
+    const updateTask = (task_id, task_text) => {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.map(task => {
+            if (task.task_id === task_id) {
+                task.task_text = task_text;
+            }
+            return task;
+        }
+        );
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        setTasks(getTasks());
+    }
+
     const filterTasks = (filter) => {
         let tasks = getTasks();
         console.log(tasks)
@@ -110,6 +123,7 @@ const TaskProvider = ({ children }) => {
         add_task,
         deleteTask,
         toggleTask,
+        updateTask,
         refresh_tasks,
         filterTasks
     }

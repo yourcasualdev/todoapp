@@ -1,14 +1,16 @@
 import { TaskList, AddTask, Navbar } from './components';
+import { useThemeContext } from './context/themeContext';
 
 function App() {
+  const { theme } = useThemeContext();
   return (
-    <>
+    <div data-theme={theme}>
       <Navbar />
-      <div className="bg-black min-h-screen">
+      <div className=" min-h-screen">
         <TaskList />
         <AddTask />
       </div>
-    </>
+    </div>
   );
 }
 
