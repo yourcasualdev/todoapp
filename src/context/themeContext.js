@@ -16,15 +16,15 @@ const THEME_LIGHT = "lofi"
 // lofi halloween
 
 const ThemeProvider = ({ children }) => {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState(THEME_LIGHT);
 
     useEffect(() => {
-        localStorage.getItem("theme") ? setTheme(localStorage.getItem("theme")) : localStorage.setItem("theme", "light");
+        localStorage.getItem("theme") ? setTheme(localStorage.getItem("theme")) : localStorage.setItem("theme", THEME_LIGHT);
     }, []);
 
     const toggleTheme = () => {
         setTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
-        localStorage.setItem("theme", theme);
+        localStorage.setItem("theme", theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
     }
 
     return (
