@@ -1,6 +1,5 @@
 import Task from '../Task/Task'
 import { useTaskContext } from '../../context/taskContext'
-import List from '@mui/material/List';
 import { useEffect } from 'react';
 
 
@@ -9,6 +8,7 @@ const TaskList = () => {
 
   useEffect(() => {
     console.log("rendering task list")
+    console.log(tasks)
   })
 
 
@@ -19,13 +19,22 @@ const TaskList = () => {
           <tr>
             <th>Number</th>
             <th>Todos</th>
-            <th></th>
+            <th>Creation Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {tasks.map((task, index) => {
-            return <Task key={index} num={index} task={task} />
-          })}
+          {tasks.length > 0 ?
+
+            // if there is a task, render the task
+            tasks.map((task, index) => {
+              return <Task key={index} num={index} task={task} />
+            })
+
+            :
+            // if there is no tasks in the list, show this message
+            <tr><td colSpan="4">No Tasks</td></tr>
+          }
         </tbody>
       </table>
     </div>

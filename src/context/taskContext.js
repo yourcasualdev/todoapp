@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 const TaskContext = createContext();
 
@@ -6,12 +7,29 @@ const TaskProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
     const [update, setUpdate] = useState(false);
 
-    useEffect(() => {
-        setTasks(JSON.parse(localStorage.getItem("tasks")) || []);
-    }, [update]);
+    // function that gathers all the tasks
+    const getTasks = () => JSON.parse(localStorage.getItem('tasks')) || [];
 
     const refresh_tasks = () => {
         setUpdate(!update);
+    }
+
+    useEffect(() =>
+        setTasks(getTasks())
+        , []);
+
+
+    const generate_id = () => {
+        //look existing ids and generate new one
+        let ids = tasks.map(task => task.task_id);
+        let new_id = uuidv4();
+
+        // if it's not in the list, return it
+        while (ids.includes(new_id)) {
+            new_id = uuidv4();
+        }
+
+        return new_id;
     }
 
 
@@ -24,25 +42,22 @@ const TaskProvider = ({ children }) => {
 
         const task = {
             task_text: task_text,
-            task_id: tasks.length + 1,
-            task_is_completed: false
+            task_id: generate_id(),
+            task_is_completed: false,
+            task_date: new Date()
         }
 
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        refresh_tasks();
+        setTasks(getTasks());
     }
 
-    const get_tasks = () => {
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        return tasks;
-    }
 
     const deleteTask = (task_id) => {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks = tasks.filter(task => task.task_id !== task_id);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        setTasks(get_tasks());
+        setTasks(getTasks());
     }
 
     const toggleTask = (task_id) => {
@@ -55,7 +70,37 @@ const TaskProvider = ({ children }) => {
         }
         );
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        setTasks(get_tasks());
+        setTasks(getTasks());
+    }
+
+    const filterTasks = (filter) => {
+        let tasks = getTasks();
+        console.log(tasks)
+        tasks = tasks.filter(task => {
+            if (filter === "all") {
+                return true;
+            } else if (filter === "completed") {
+                return task.task_is_completed;
+            } else if (filter === "uncompleted") {
+                return !task.task_is_completed;
+            } else if (filter === "today") {
+                let today = new Date();
+                let task_date = new Date(task.task_date);
+                return (today.getDate() === task_date.getDate() && today.getMonth() === task_date.getMonth() && today.getFullYear() === task_date.getFullYear());
+            } else if (filter === "week") {
+                let today = new Date();
+                let task_date = new Date(task.task_date);
+                return (today.getDate() - task_date.getDate() <= 7);
+            } else if (filter === "month") {
+                let today = new Date();
+                let task_date = new Date(task.task_date);
+                return (today.getMonth() === task_date.getMonth() && today.getFullYear() === task_date.getFullYear());
+            } // includes filter word
+            else if (task.task_text.toLowerCase().includes(filter.toLowerCase())) {
+                return true;
+            }
+        });
+        setTasks(tasks);
     }
 
     const value = {
@@ -63,7 +108,8 @@ const TaskProvider = ({ children }) => {
         add_task,
         deleteTask,
         toggleTask,
-        refresh_tasks
+        refresh_tasks,
+        filterTasks
     }
 
     return (
