@@ -1,17 +1,19 @@
 import { useTaskContext } from "../../context/taskContext";
 
-const Task = ({ task }) => {
+const Task = ({ num, task }) => {
   const { deleteTask, toggleTask } = useTaskContext();
+  console.log(task)
+
   return (
-    <div className="cursor-pointer bg-[#9999993d]" key={task.task_id} onClick={() => toggleTask(task.task_id)}>
-      <h2>{task.task_text}</h2>
-      {task.task_is_completed ? (
-        <p>Completed</p>
-      ) : (
-        <p>Not Completed</p>
-      )}
-      <button onClick={() => { deleteTask(task.task_id) }}>Delete Task</button>
-    </div>
+    <tr className="" onClick={() => toggleTask(task.task_id)}>
+      <th>{num}</th>
+      <td className={task.task_is_completed ? "line-through" : ""}>{task.task_text}</td>
+      <td className="w-[1rem] max-w-lg content-start ">
+        <button onClick={(e) => deleteTask(task.task_id)} className={"btn btn-primary"}>
+          Delete
+        </button>
+      </td>
+    </tr>
   )
 }
 

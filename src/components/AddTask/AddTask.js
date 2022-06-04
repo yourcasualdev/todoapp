@@ -18,17 +18,18 @@ const AddTask = () => {
   };
 
   return (
-    <form className="bg-green-800 fixed flex w-full h-[5vh] min-h-[4.5rem] sm:h-[5vh] px-4 rounded-lg bottom-0 grid-cols-3">
-      <input
-        type="text"
-        placeholder="Add Task"
-        value={task_text}
-        onChange={(e) => handleChange(e)}
-        className="flex-auto px-2 py-1 w-[80vw] rounded-l-lg bg-transparent border-transparent outline-none"
-      />
-      <button onClick={(e) => handleSubmit(e)} className={"flex-auto w-[20wv] outline-none"}>
-        <BsFillPlusCircleFill className="text-white text-[2.3rem]" />
-      </button>
+    <form className=" fixed bottom-0 w-screen grid place-items-center">
+      <div className="flex">
+        <input
+          type="text"
+          placeholder="Add Task"
+          value={task_text}
+          onChange={(e) => handleChange(e)}
+          className="input input-bordered input-secondary w-[2000px] max-w-xs" />
+        <button onClick={(e) => handleSubmit(e)} className={"btn btn-primary"}>
+          ADD
+        </button>
+      </div>
     </form>
   );
 };
