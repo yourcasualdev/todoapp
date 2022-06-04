@@ -5,8 +5,6 @@ import { useTaskContext } from '../../context/taskContext'
 
 const Navbar = () => {
 
-    const [searchWord, setSearchWord] = useState("")
-
     const { filterTasks } = useTaskContext()
 
     const handleSearchChange = (e) => {
@@ -17,7 +15,7 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
-                <a className="btn btn-ghost normal-case text-xl">ToDos</a>
+                <a href='/' className="btn btn-ghost normal-case text-xl">ToDos</a>
             </div>
             <div className="flex-none gap-2">
                 <div className="form-control">
@@ -36,13 +34,13 @@ const Navbar = () => {
                     </label>
                     <ul tabIndex="0" className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                         <li>
-                            <a className="justify-between">
+                            <a href='/' className="justify-between">
                                 Profile
                                 <span className="badge">New</span>
                             </a>
                         </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><a href='/'>Settings</a></li>
+                        <li><a href='/'>Logout</a></li>
                     </ul>
                 </div>
             </div>

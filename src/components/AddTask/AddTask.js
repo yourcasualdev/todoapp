@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useTaskContext } from "../../context/taskContext";
-import { BsFillPlusCircleFill } from 'react-icons/bs'
 
 const AddTask = () => {
   const { add_task } = useTaskContext();

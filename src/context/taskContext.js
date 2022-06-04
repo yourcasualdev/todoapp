@@ -98,6 +98,8 @@ const TaskProvider = ({ children }) => {
             } // includes filter word
             else if (task.task_text.toLowerCase().includes(filter.toLowerCase())) {
                 return true;
+            } else {
+                return false;
             }
         });
         setTasks(tasks);

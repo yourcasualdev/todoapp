@@ -13,13 +13,13 @@ const TaskList = () => {
 
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto max-w-[60rem] m-auto pt-5">
       <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Number</th>
             <th>Todos</th>
-            <th>Creation Date</th>
+            <th className='hidden w-1 sm:table-cell'>Creation Date</th>
             <th>Actions</th>
           </tr>
         </thead>
