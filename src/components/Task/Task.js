@@ -5,15 +5,15 @@ const Task = ({ num, task }) => {
   const creationDate = new Date(task.task_date);
 
   return (
-    <tr className="max-w-xs">
+    <tr onClick={() => toggleTask(task.task_id)} className="max-w-xs">
 
       {/* Task Number */}
-      <th className="w-[10px] z-0">{num}</th>
+      <th className="w-[10px] z-0">{num + 1}</th>
 
       {/* Task Text */}
       <td
-        className={`${task.task_is_completed ? "line-through" : ""} max-w-[1rem] text-w truncate`}>
-        {task.task_text}
+        className={`${task.task_is_completed ? "line-through" : ""} max-w-[1rem] text-w truncate cursor-pointer`}>
+        <h2>{task.task_text}</h2>
       </td>
 
       {/* Task Creation Date */}

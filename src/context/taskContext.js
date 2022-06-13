@@ -32,10 +32,14 @@ const TaskProvider = ({ children }) => {
         return new_id;
     }
 
-
+    /**
+     * 
+     * @param {string} task_text - the text of the task to be added
+     * @returns {object} - the task object that was added
+     */
     const add_task = (task_text) => {
         if (task_text === "" || typeof (task_text) !== "string") {
-            return;
+            throw new Error("Task text must be a string");
         }
 
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -50,16 +54,27 @@ const TaskProvider = ({ children }) => {
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
         setTasks(getTasks());
+        return task;
     }
 
-
+    /**
+     * @param {int} task_id - the id of the task to be removed
+     * @returns {int} - if the task was removed, returns 2, otherwise returns -1
+     */
     const deleteTask = (task_id) => {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks = tasks.filter(task => task.task_id !== task_id);
         localStorage.setItem('tasks', JSON.stringify(tasks));
         setTasks(getTasks());
+
+        return 1;
     }
 
+
+    /**
+     * @param {int} task_id - the id of the task to be completed
+     * @returns {int} - if the task was completed, returns 2, otherwise returns -1
+     */
     const toggleTask = (task_id) => {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks = tasks.map(task => {
@@ -86,7 +101,22 @@ const TaskProvider = ({ children }) => {
         setTasks(getTasks());
     }
 
+    /**
+     * 
+     * @param {string} filter - the filter to be applied to the tasks
+     * # FilterTasks
+     * iterates through the tasks and returns the ones that match the filter
+     * then sets the tasks to the filtered tasks
+     * 
+     * ### Filter options:
+     * "all", "completed", "uncompleted", "today", "tomorrow", "week", "month"
+     */
     const filterTasks = (filter) => {
+
+        if (typeof (filter) !== "string") {
+            throw new Error("Filter must be a string");
+        }
+
         let tasks = getTasks();
         console.log(tasks)
         tasks = tasks.filter(task => {
@@ -108,6 +138,10 @@ const TaskProvider = ({ children }) => {
                 let today = new Date();
                 let task_date = new Date(task.task_date);
                 return (today.getMonth() === task_date.getMonth() && today.getFullYear() === task_date.getFullYear());
+            } else if (filter === "tomorrow") {
+                let today = new Date();
+                let task_date = new Date(task.task_date);
+                return (today.getDate() + 1 === task_date.getDate() && today.getMonth() === task_date.getMonth() && today.getFullYear() === task_date.getFullYear());
             } // includes filter word
             else if (task.task_text.toLowerCase().includes(filter.toLowerCase())) {
                 return true;
